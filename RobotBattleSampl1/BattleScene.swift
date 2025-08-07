@@ -100,14 +100,14 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     func setupRobots() {
         let fullWidth = size.width
 
-        localRobot = RobotFactory.createRobot(color: isCentral ? .blue : .red)
+        localRobot = RobotFactory.createRobot(color: isCentral ? .yellow : .green)
         localRobot.position = isCentral
             ? CGPoint(x: fullWidth * 0.25, y: size.height * 0.5)
             : CGPoint(x: fullWidth * 0.75, y: size.height * 0.5)
         localRobot.name = "localRobot"
         addChild(localRobot)
 
-        remoteRobot = RobotFactory.createRobot(color: isCentral ? .red : .blue)
+        remoteRobot = RobotFactory.createRobot(color: isCentral ? .green : .yellow)
         remoteRobot.position = isCentral
             ? CGPoint(x: fullWidth * 0.75, y: size.height * 0.5)
             : CGPoint(x: fullWidth * 0.25, y: size.height * 0.5)
