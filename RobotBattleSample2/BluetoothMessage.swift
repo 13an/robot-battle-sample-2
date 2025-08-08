@@ -16,6 +16,8 @@ enum BluetoothMessage: Codable {
     case resetGame
     case gameOver
     case hit(damage: Int)
+    case placeBomb(BombData)
+    case bombExploded(bombId: UUID)
 
     func toData() -> Data? {
         try? JSONEncoder().encode(self)

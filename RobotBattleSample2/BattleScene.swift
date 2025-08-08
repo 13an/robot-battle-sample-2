@@ -36,6 +36,11 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     let damageCooldown: TimeInterval = 0.5
     
     var isTouchingWall = false
+    
+    // 爆弾機能
+    var bombs: [UUID: SKSpriteNode] = [:] // 爆弾ID -> スプライトノード
+    var bombCount = 0 // 使用した爆弾数
+    let maxBombs = 3 // 1ゲームで使える爆弾数
 
     // MARK: - 座標変換ヘルパー関数
     /// peripheral側では座標を上下反転する
@@ -253,8 +258,9 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             sendLocalState()
         }
         
-            checkWallCollision(for: localRobot, isLocal: true)
-            checkWallCollision(for: remoteRobot, isLocal: false)
+        checkWallCollision(for: localRobot, isLocal: true)
+        checkWallCollision(for: remoteRobot, isLocal: false)
+        checkBombCollisions() // 爆弾衝突チェックを追加
     }
     
     func joystickDidMove(direction: CGVector) {
@@ -394,6 +400,122 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         knockback.timingMode = .easeOut
         node.run(knockback)
     }
+    
+    // MARK: - 爆弾機能
+    func placeBomb(at position: CGPoint) {
+        guard bombCount < maxBombs else { return }
+        
+        let bombData = BombData(position: position, ownerIsCentral: isCentral)
+        
+        // 爆弾スプライトを作成
+        let bombSprite = SKSpriteNode(imageNamed: "Bomb")
+        bombSprite.size = CGSize(width: 30, height: 30)
+        bombSprite.position = position
+        bombSprite.zPosition = 50
+        bombSprite.name = "bomb_\(bombData.id.uuidString)"
+        
+        // 爆弾を画面に配置
+        addChild(bombSprite)
+        bombs[bombData.id] = bombSprite
+        
+        bombCount += 1
+        print("💣 爆弾配置: \(bombCount)/\(maxBombs)")
+        
+        // 相手に爆弾配置を通知（座標変換適用）
+        let transformedBombData = BombData(position: transformPosition(position), ownerIsCentral: isCentral)
+        BluetoothManager.shared.send(.placeBomb(transformedBombData))
+    }
+    
+    func receiveBomb(_ bombData: BombData) {
+        // 受信した爆弾データから座標変換して配置
+        let transformedPosition = transformPosition(bombData.position)
+        
+        let bombSprite = SKSpriteNode(imageNamed: "Bomb")
+        bombSprite.size = CGSize(width: 30, height: 30)
+        bombSprite.position = transformedPosition
+        bombSprite.zPosition = 50
+        bombSprite.name = "bomb_\(bombData.id.uuidString)"
+        
+        addChild(bombSprite)
+        bombs[bombData.id] = bombSprite
+        
+        print("💣 相手の爆弾を受信して配置: ID \(bombData.id)")
+    }
+    
+    func checkBombCollisions() {
+        for (bombId, bombSprite) in bombs {
+            let bombPosition = bombSprite.position
+            
+            // ローカルロボットとの衝突チェック
+            let localDistance = distance(localRobot.position, bombPosition)
+            if localDistance < 35 { // 爆弾サイズ + ロボットサイズを考慮
+                explodeBomb(id: bombId, hitBy: "local")
+                return
+            }
+            
+            // リモートロボットとの衝突チェック  
+            let remoteDistance = distance(remoteRobot.position, bombPosition)
+            if remoteDistance < 35 {
+                explodeBomb(id: bombId, hitBy: "remote")
+                return
+            }
+        }
+    }
+    
+    func distance(_ point1: CGPoint, _ point2: CGPoint) -> CGFloat {
+        let dx = point1.x - point2.x
+        let dy = point1.y - point2.y
+        return sqrt(dx * dx + dy * dy)
+    }
+    
+    func explodeBomb(id: UUID, hitBy: String) {
+        guard let bombSprite = bombs[id] else { return }
+        
+        let bombPosition = bombSprite.position
+        print("💥 爆弾爆発! ID: \(id), 触れたロボット: \(hitBy)")
+        
+        // 爆発エフェクト表示
+        showHitEffect(at: bombPosition)
+        
+        // 触れたロボットにダメージ
+        if hitBy == "local" {
+            hp -= 10
+            updateLocalHP()
+            if hp <= 0 {
+                BluetoothManager.shared.send(.gameOver)
+                showGameOver(won: false)
+            }
+        } else if hitBy == "remote" {
+            if isCentral {
+                BluetoothManager.shared.send(.hit(damage: 10))
+            }
+        }
+        
+        // 爆弾を画面から削除
+        bombSprite.removeFromParent()
+        bombs.removeValue(forKey: id)
+        
+        // 相手に爆発を通知
+        BluetoothManager.shared.send(.bombExploded(bombId: id))
+        
+        // 振動フィードバック
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+    
+    func handleBombExploded(_ bombId: UUID) {
+        // 相手から爆発通知を受信した場合
+        guard let bombSprite = bombs[bombId] else { return }
+        
+        let bombPosition = bombSprite.position
+        print("💥 相手からの爆発通知: ID \(bombId)")
+        
+        // 爆発エフェクト表示
+        showHitEffect(at: bombPosition)
+        
+        // 爆弾を画面から削除
+        bombSprite.removeFromParent()
+        bombs.removeValue(forKey: bombId)
+    }
 
 
 
@@ -425,7 +547,17 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let loc = t.location(in: self)
-            joystick.touchBegan(t)
+            
+            // ジョイスティックのタッチ処理
+            if joystick.contains(t.location(in: joystick.parent!)) {
+                joystick.touchBegan(t)
+                continue
+            }
+            
+            // 爆弾配置処理（ジョイスティック以外をタップ）
+            if bombCount < maxBombs {
+                placeBomb(at: loc)
+            }
 
             if let node = atPoint(loc) as? SKLabelNode, node.name == "rematch" {
                 // Bluetooth切断（オプション）
@@ -467,6 +599,14 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         // クールダウンや当たり判定状態も初期化
         lastDamageTime = 0
         lastCollisionResult = .none
+        
+        // 爆弾リセット
+        for (_, bombSprite) in bombs {
+            bombSprite.removeFromParent()
+        }
+        bombs.removeAll()
+        bombCount = 0
+        print("💣 爆弾をリセット")
 
         // オーバーレイ削除
         gameOverOverlay?.removeFromParent()
@@ -493,6 +633,10 @@ extension BattleScene: BluetoothManagerDelegate {
                 BluetoothManager.shared.send(.gameOver)
                 showGameOver(won: false)
             }
+        case .placeBomb(let bombData):
+            receiveBomb(bombData)
+        case .bombExploded(let bombId):
+            handleBombExploded(bombId)
         }
     }
 
