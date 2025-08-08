@@ -128,11 +128,13 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         // 両端末で自分が下部、相手が上部に表示される配置
         localRobot = RobotFactory.createRobot(color: isCentral ? .yellow : .green)
         localRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.2) // 自分は常に下部
+        localRobot.zRotation = CGFloat.pi / 2 // 上向き
         localRobot.name = "localRobot"
         addChild(localRobot)
 
         remoteRobot = RobotFactory.createRobot(color: isCentral ? .green : .yellow)
         remoteRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.8) // 相手は常に上部
+        remoteRobot.zRotation = -CGFloat.pi / 2 // 下向き
         remoteRobot.name = "remoteRobot"
         addChild(remoteRobot)
     }
@@ -381,10 +383,10 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         remoteRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.8)
         
         // 角度や速度も初期化
-        angle = 0
+        angle = CGFloat.pi / 2 // 初期は上向き
         velocity = .zero
-        localRobot.zRotation = 0
-        remoteRobot.zRotation = 0
+        localRobot.zRotation = CGFloat.pi / 2 // 上向き
+        remoteRobot.zRotation = -CGFloat.pi / 2 // 下向き
 
         // クールダウンや当たり判定状態も初期化
         lastDamageTime = 0
