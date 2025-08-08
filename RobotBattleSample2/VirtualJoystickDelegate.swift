@@ -64,20 +64,24 @@ class VirtualJoystick: SKNode {
     private func updateStick(at location: CGPoint) {
         var vector = CGVector(dx: location.x, dy: location.y)
         let length = sqrt(vector.dx * vector.dx + vector.dy * vector.dy)
+        
+        // スティックの位置を更新（半径制限あり）
         if length > radius {
             vector.dx = vector.dx / length * radius
             vector.dy = vector.dy / length * radius
         }
         stick.position = CGPoint(x: vector.dx, y: vector.dy)
 
-        // 8方向にスナップ（離れすぎたら0）
-        let threshold: CGFloat = 20
-        var snapped = CGVector.zero
-        if abs(vector.dx) > threshold || abs(vector.dy) > threshold {
-            snapped.dx = vector.dx.sign == .plus ? 1 : (vector.dx == 0 ? 0 : -1)
-            snapped.dy = vector.dy.sign == .plus ? 1 : (vector.dy == 0 ? 0 : -1)
+        // 全角度対応：正規化されたベクトルをそのまま使用
+        let threshold: CGFloat = 10 // デッドゾーンを小さく
+        var normalizedVector = CGVector.zero
+        
+        if length > threshold {
+            // 正規化（-1.0 から 1.0 の範囲）
+            normalizedVector.dx = vector.dx / radius
+            normalizedVector.dy = vector.dy / radius
         }
 
-        delegate?.joystickDidMove(direction: snapped)
+        delegate?.joystickDidMove(direction: normalizedVector)
     }
 }

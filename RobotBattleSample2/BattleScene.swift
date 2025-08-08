@@ -548,8 +548,10 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         for t in touches {
             let loc = t.location(in: self)
             
-            // ジョイスティックのタッチ処理
-            if joystick.contains(t.location(in: joystick.parent!)) {
+            // ジョイスティックのタッチ処理（正しい座標変換）
+            let joystickLoc = t.location(in: self)
+            let joystickFrame = CGRect(x: joystick.position.x - 80, y: joystick.position.y - 80, width: 160, height: 160)
+            if joystickFrame.contains(joystickLoc) {
                 joystick.touchBegan(t)
                 continue
             }
