@@ -10,8 +10,10 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     var localRobot: SKNode!
     var remoteRobot: SKNode!
     var joystick: VirtualJoystick!
-    var hpLabel: SKLabelNode!
-    var remoteHPLabel: SKLabelNode!
+    var localHPBar: SKShapeNode!
+    var localHPFill: SKShapeNode!
+    var remoteHPBar: SKShapeNode!
+    var remoteHPFill: SKShapeNode!
     var hp: Int = 100
     var remoteHP: Int = 100
     var gameOverOverlay: SKNode?
@@ -109,30 +111,45 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         // カメラは不要（画面全体を使う）
         camera = nil
 
+        setupBackground()
         setupRobots()
         setupJoystick()
-        setupHPLabel()
-        setupRemoteHPLabel()
+        setupHPBars()
 
         BluetoothManager.shared.delegate = self
         physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: .zero, size: size))
 
         let border = SKShapeNode(rect: CGRect(origin: .zero, size: size))
-        border.strokeColor = .red
+        border.strokeColor = .clear
         border.lineWidth = 4
         border.zPosition = 1000
         addChild(border)
     }
+    
+    func setupBackground() {
+        let background = SKSpriteNode(imageNamed: "BattleFieldBackground")
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.zPosition = -1 // 最背面に配置
+        
+        // 画面いっぱいにfillするためのスケール計算
+        let scaleX = frame.width / background.size.width
+        let scaleY = frame.height / background.size.height
+        let scale = max(scaleX, scaleY) // 縦横比を維持して全体を覆う
+        
+        background.setScale(scale)
+        
+        addChild(background)
+    }
 
     func setupRobots() {
         // 両端末で自分が下部、相手が上部に表示される配置
-        localRobot = RobotFactory.createRobot(color: isCentral ? .yellow : .green)
+        localRobot = RobotFactory.createRobot(color: isCentral ? .yellow : .green, isCentral: isCentral)
         localRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.2) // 自分は常に下部
         localRobot.zRotation = CGFloat.pi / 2 // 上向き
         localRobot.name = "localRobot"
         addChild(localRobot)
 
-        remoteRobot = RobotFactory.createRobot(color: isCentral ? .green : .yellow)
+        remoteRobot = RobotFactory.createRobot(color: isCentral ? .green : .yellow, isCentral: !isCentral)
         remoteRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.8) // 相手は常に上部
         remoteRobot.zRotation = -CGFloat.pi / 2 // 下向き
         remoteRobot.name = "remoteRobot"
@@ -148,26 +165,85 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         addChild(joystick)
     }
 
-    func setupHPLabel() {
-        hpLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
-        hpLabel.fontSize = 20
-        hpLabel.fontColor = .yellow
-        hpLabel.text = "自分: \(hp)"
-        hpLabel.horizontalAlignmentMode = .left
-        // 左下に自分のHPを表示
-        hpLabel.position = CGPoint(x: 20, y: 40)
-        addChild(hpLabel)
+    func setupHPBars() {
+        let barWidth = frame.width - 40
+        let barHeight: CGFloat = 20
+        
+        // 自分のHPバー（下部）
+        let localBarRect = CGRect(x: -barWidth/2, y: -barHeight/2, width: barWidth, height: barHeight)
+        localHPBar = SKShapeNode(rect: localBarRect)
+        localHPBar.strokeColor = .white
+        localHPBar.lineWidth = 4
+        localHPBar.fillColor = .clear
+        localHPBar.position = CGPoint(x: frame.midX, y: 30)
+        localHPBar.zPosition = 100
+        addChild(localHPBar)
+        
+        // 自分のHPフィル（緑色）
+        let localFillRect = CGRect(x: -barWidth/2, y: -barHeight/2, width: barWidth, height: barHeight)
+        localHPFill = SKShapeNode(rect: localFillRect)
+        localHPFill.strokeColor = .clear
+        localHPFill.fillColor = .green
+        localHPFill.position = CGPoint(x: 0, y: 0)
+        localHPFill.zPosition = 1
+        localHPBar.addChild(localHPFill)
+        
+        // 相手のHPバー（上部）
+        let remoteBarRect = CGRect(x: -barWidth/2, y: -barHeight/2, width: barWidth, height: barHeight)
+        remoteHPBar = SKShapeNode(rect: remoteBarRect)
+        remoteHPBar.strokeColor = .white
+        remoteHPBar.lineWidth = 4
+        remoteHPBar.fillColor = .clear
+        remoteHPBar.position = CGPoint(x: frame.midX, y: frame.height - 30)
+        remoteHPBar.zPosition = 100
+        addChild(remoteHPBar)
+        
+        // 相手のHPフィル（緑色）
+        let remoteFillRect = CGRect(x: -barWidth/2, y: -barHeight/2, width: barWidth, height: barHeight)
+        remoteHPFill = SKShapeNode(rect: remoteFillRect)
+        remoteHPFill.strokeColor = .clear
+        remoteHPFill.fillColor = .green
+        remoteHPFill.position = CGPoint(x: 0, y: 0)
+        remoteHPFill.zPosition = 1
+        remoteHPBar.addChild(remoteHPFill)
     }
     
-    func setupRemoteHPLabel() {
-        remoteHPLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
-        remoteHPLabel.fontSize = 20
-        remoteHPLabel.fontColor = .red
-        remoteHPLabel.text = "相手: \(remoteHP)"
-        remoteHPLabel.horizontalAlignmentMode = .left
-        // 左上に相手のHPを表示
-        remoteHPLabel.position = CGPoint(x: 20, y: frame.height - 40)
-        addChild(remoteHPLabel)
+    func updateLocalHP() {
+        let hpPercent = CGFloat(hp) / 100.0
+        let barWidth = frame.width - 40
+        let newWidth = barWidth * hpPercent
+        
+        // 新しいフィルを作成
+        let newFillRect = CGRect(x: -barWidth/2, y: -10, width: newWidth, height: 20)
+        let newFill = SKShapeNode(rect: newFillRect)
+        newFill.strokeColor = .clear
+        newFill.fillColor = .green
+        newFill.position = CGPoint(x: 0, y: 0)
+        newFill.zPosition = 1
+        
+        // 古いフィルを削除して新しいフィルを追加
+        localHPFill.removeFromParent()
+        localHPFill = newFill
+        localHPBar.addChild(localHPFill)
+    }
+    
+    func updateRemoteHP() {
+        let hpPercent = CGFloat(remoteHP) / 100.0
+        let barWidth = frame.width - 40
+        let newWidth = barWidth * hpPercent
+        
+        // 新しいフィルを作成
+        let newFillRect = CGRect(x: -barWidth/2, y: -10, width: newWidth, height: 20)
+        let newFill = SKShapeNode(rect: newFillRect)
+        newFill.strokeColor = .clear
+        newFill.fillColor = .green
+        newFill.position = CGPoint(x: 0, y: 0)
+        newFill.zPosition = 1
+        
+        // 古いフィルを削除して新しいフィルを追加
+        remoteHPFill.removeFromParent()
+        remoteHPFill = newFill
+        remoteHPBar.addChild(remoteHPFill)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -227,7 +303,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         remoteRobot.run(moveAction)
         remoteRobot.zRotation = transformedAngle
         remoteHP = state.hp
-        remoteHPLabel.text = "相手: \(remoteHP)"
+        updateRemoteHP()
         checkCollision()
     }
 
@@ -275,7 +351,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             print("💥 remote hits local")
             if isCentral {
                 hp -= 10
-                hpLabel.text = "自分: \(hp)"
+                updateLocalHP()
                 if hp <= 0 {
                     BluetoothManager.shared.send(.gameOver)
                     showGameOver(won: false)
@@ -289,7 +365,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             if isCentral {
                 BluetoothManager.shared.send(.hit(damage: 10))
                 hp -= 10
-                hpLabel.text = "自分: \(hp)"
+                updateLocalHP()
                 if hp <= 0 {
                     BluetoothManager.shared.send(.gameOver)
                     showGameOver(won: false)
@@ -375,8 +451,8 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     func resetGame() {
         hp = 100
         remoteHP = 100
-        hpLabel.text = "自分: \(hp)"
-        remoteHPLabel.text = "相手: \(remoteHP)"
+        updateLocalHP()
+        updateRemoteHP()
         
         // 位置リセット：自分は常に下部、相手は常に上部
         localRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.2)
@@ -412,7 +488,7 @@ extension BattleScene: BluetoothManagerDelegate {
             break
         case .hit(let damage):
             hp -= damage
-            hpLabel.text = "自分: \(hp)"
+            updateLocalHP()
             if hp <= 0 {
                 BluetoothManager.shared.send(.gameOver)
                 showGameOver(won: false)
