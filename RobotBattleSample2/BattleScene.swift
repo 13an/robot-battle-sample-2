@@ -1,5 +1,5 @@
 //  BattleScene.swift
-//  RobotBattleSampl1
+//  RobotBattleSample2
 
 import SpriteKit
 import AudioToolbox

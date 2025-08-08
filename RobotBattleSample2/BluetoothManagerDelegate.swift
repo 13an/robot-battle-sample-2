@@ -1,6 +1,6 @@
 //
 //  BluetoothManagerDelegate.swift
-//  RobotBattleSampl1
+//  RobotBattleSample2
 //
 //  Created by takumi.banjoya.ts on 2025/08/04.
 //

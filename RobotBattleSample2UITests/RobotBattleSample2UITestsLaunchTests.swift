@@ -1,13 +1,13 @@
 //
-//  RobotBattleSampl1UITestsLaunchTests.swift
-//  RobotBattleSampl1UITests
+//  RobotBattleSample2UITestsLaunchTests.swift
+//  RobotBattleSample2UITests
 //
 //  Created by takumi.banjoya.ts on 2025/08/04.
 //
 
 import XCTest
 
-final class RobotBattleSampl1UITestsLaunchTests: XCTestCase {
+final class RobotBattleSample2UITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

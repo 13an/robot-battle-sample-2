@@ -12,50 +12,50 @@
 			containerPortal = 604D3E4C2E40AABF0066AED5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 604D3E532E40AABF0066AED5;
-			remoteInfo = RobotBattleSampl1;
+			remoteInfo = RobotBattleSample2;
 		};
 		604D3E6D2E40AAC20066AED5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 604D3E4C2E40AABF0066AED5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 604D3E532E40AABF0066AED5;
-			remoteInfo = RobotBattleSampl1;
+			remoteInfo = RobotBattleSample2;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		604D3E542E40AABF0066AED5 /* RobotBattleSampl1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotBattleSampl1.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D3E622E40AAC20066AED5 /* RobotBattleSampl1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotBattleSampl1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D3E6C2E40AAC20066AED5 /* RobotBattleSampl1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotBattleSampl1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D3E542E40AABF0066AED5 /* RobotBattleSample2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotBattleSample2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D3E622E40AAC20066AED5 /* RobotBattleSample2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotBattleSample2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D3E6C2E40AAC20066AED5 /* RobotBattleSample2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotBattleSample2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		604D3E962E4317DC0066AED5 /* Exceptions for "RobotBattleSampl1" folder in "RobotBattleSampl1" target */ = {
+		604D3E962E4317DC0066AED5 /* Exceptions for "RobotBattleSample2" folder in "RobotBattleSample2" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 604D3E532E40AABF0066AED5 /* RobotBattleSampl1 */;
+			target = 604D3E532E40AABF0066AED5 /* RobotBattleSample2 */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		604D3E562E40AABF0066AED5 /* RobotBattleSampl1 */ = {
+		604D3E562E40AABF0066AED5 /* RobotBattleSample2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				604D3E962E4317DC0066AED5 /* Exceptions for "RobotBattleSampl1" folder in "RobotBattleSampl1" target */,
+				604D3E962E4317DC0066AED5 /* Exceptions for "RobotBattleSample2" folder in "RobotBattleSample2" target */,
 			);
-			path = RobotBattleSampl1;
+			path = RobotBattleSample2;
 			sourceTree = "<group>";
 		};
-		604D3E652E40AAC20066AED5 /* RobotBattleSampl1Tests */ = {
+		604D3E652E40AAC20066AED5 /* RobotBattleSample2Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RobotBattleSampl1Tests;
+			path = RobotBattleSample2Tests;
 			sourceTree = "<group>";
 		};
-		604D3E6F2E40AAC20066AED5 /* RobotBattleSampl1UITests */ = {
+		604D3E6F2E40AAC20066AED5 /* RobotBattleSample2UITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RobotBattleSampl1UITests;
+			path = RobotBattleSample2UITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,9 +88,9 @@
 		604D3E4B2E40AABF0066AED5 = {
 			isa = PBXGroup;
 			children = (
-				604D3E562E40AABF0066AED5 /* RobotBattleSampl1 */,
-				604D3E652E40AAC20066AED5 /* RobotBattleSampl1Tests */,
-				604D3E6F2E40AAC20066AED5 /* RobotBattleSampl1UITests */,
+				604D3E562E40AABF0066AED5 /* RobotBattleSample2 */,
+				604D3E652E40AAC20066AED5 /* RobotBattleSample2Tests */,
+				604D3E6F2E40AAC20066AED5 /* RobotBattleSample2UITests */,
 				604D3E552E40AABF0066AED5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,9 +98,9 @@
 		604D3E552E40AABF0066AED5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				604D3E542E40AABF0066AED5 /* RobotBattleSampl1.app */,
-				604D3E622E40AAC20066AED5 /* RobotBattleSampl1Tests.xctest */,
-				604D3E6C2E40AAC20066AED5 /* RobotBattleSampl1UITests.xctest */,
+				604D3E542E40AABF0066AED5 /* RobotBattleSample2.app */,
+				604D3E622E40AAC20066AED5 /* RobotBattleSample2Tests.xctest */,
+				604D3E6C2E40AAC20066AED5 /* RobotBattleSample2UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		604D3E532E40AABF0066AED5 /* RobotBattleSampl1 */ = {
+		604D3E532E40AABF0066AED5 /* RobotBattleSample2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D3E762E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1" */;
+			buildConfigurationList = 604D3E762E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2" */;
 			buildPhases = (
 				604D3E502E40AABF0066AED5 /* Sources */,
 				604D3E512E40AABF0066AED5 /* Frameworks */,
@@ -121,18 +121,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				604D3E562E40AABF0066AED5 /* RobotBattleSampl1 */,
+				604D3E562E40AABF0066AED5 /* RobotBattleSample2 */,
 			);
-			name = RobotBattleSampl1;
+			name = RobotBattleSample2;
 			packageProductDependencies = (
 			);
-			productName = RobotBattleSampl1;
-			productReference = 604D3E542E40AABF0066AED5 /* RobotBattleSampl1.app */;
+			productName = RobotBattleSample2;
+			productReference = 604D3E542E40AABF0066AED5 /* RobotBattleSample2.app */;
 			productType = "com.apple.product-type.application";
 		};
-		604D3E612E40AAC20066AED5 /* RobotBattleSampl1Tests */ = {
+		604D3E612E40AAC20066AED5 /* RobotBattleSample2Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D3E792E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1Tests" */;
+			buildConfigurationList = 604D3E792E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2Tests" */;
 			buildPhases = (
 				604D3E5E2E40AAC20066AED5 /* Sources */,
 				604D3E5F2E40AAC20066AED5 /* Frameworks */,
@@ -144,18 +144,18 @@
 				604D3E642E40AAC20066AED5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				604D3E652E40AAC20066AED5 /* RobotBattleSampl1Tests */,
+				604D3E652E40AAC20066AED5 /* RobotBattleSample2Tests */,
 			);
-			name = RobotBattleSampl1Tests;
+			name = RobotBattleSample2Tests;
 			packageProductDependencies = (
 			);
-			productName = RobotBattleSampl1Tests;
-			productReference = 604D3E622E40AAC20066AED5 /* RobotBattleSampl1Tests.xctest */;
+			productName = RobotBattleSample2Tests;
+			productReference = 604D3E622E40AAC20066AED5 /* RobotBattleSample2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		604D3E6B2E40AAC20066AED5 /* RobotBattleSampl1UITests */ = {
+		604D3E6B2E40AAC20066AED5 /* RobotBattleSample2UITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D3E7C2E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1UITests" */;
+			buildConfigurationList = 604D3E7C2E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2UITests" */;
 			buildPhases = (
 				604D3E682E40AAC20066AED5 /* Sources */,
 				604D3E692E40AAC20066AED5 /* Frameworks */,
@@ -167,13 +167,13 @@
 				604D3E6E2E40AAC20066AED5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				604D3E6F2E40AAC20066AED5 /* RobotBattleSampl1UITests */,
+				604D3E6F2E40AAC20066AED5 /* RobotBattleSample2UITests */,
 			);
-			name = RobotBattleSampl1UITests;
+			name = RobotBattleSample2UITests;
 			packageProductDependencies = (
 			);
-			productName = RobotBattleSampl1UITests;
-			productReference = 604D3E6C2E40AAC20066AED5 /* RobotBattleSampl1UITests.xctest */;
+			productName = RobotBattleSample2UITests;
+			productReference = 604D3E6C2E40AAC20066AED5 /* RobotBattleSample2UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 604D3E4F2E40AABF0066AED5 /* Build configuration list for PBXProject "RobotBattleSampl1" */;
+			buildConfigurationList = 604D3E4F2E40AABF0066AED5 /* Build configuration list for PBXProject "RobotBattleSample2" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -213,9 +213,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				604D3E532E40AABF0066AED5 /* RobotBattleSampl1 */,
-				604D3E612E40AAC20066AED5 /* RobotBattleSampl1Tests */,
-				604D3E6B2E40AAC20066AED5 /* RobotBattleSampl1UITests */,
+				604D3E532E40AABF0066AED5 /* RobotBattleSample2 */,
+				604D3E612E40AAC20066AED5 /* RobotBattleSample2Tests */,
+				604D3E6B2E40AAC20066AED5 /* RobotBattleSample2UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,12 +271,12 @@
 /* Begin PBXTargetDependency section */
 		604D3E642E40AAC20066AED5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D3E532E40AABF0066AED5 /* RobotBattleSampl1 */;
+			target = 604D3E532E40AABF0066AED5 /* RobotBattleSample2 */;
 			targetProxy = 604D3E632E40AAC20066AED5 /* PBXContainerItemProxy */;
 		};
 		604D3E6E2E40AAC20066AED5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D3E532E40AABF0066AED5 /* RobotBattleSampl1 */;
+			target = 604D3E532E40AABF0066AED5 /* RobotBattleSample2 */;
 			targetProxy = 604D3E6D2E40AAC20066AED5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -403,14 +403,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = RobotBattleSampl1/RobotBattleSampl1.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RobotBattleSample2/RobotBattleSample2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CH9GHVXXU9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RobotBattleSampl1/Info.plist;
+				INFOPLIST_FILE = RobotBattleSample2/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "許可してね";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -427,7 +427,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -445,14 +445,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = RobotBattleSampl1/RobotBattleSampl1.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RobotBattleSample2/RobotBattleSample2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CH9GHVXXU9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RobotBattleSampl1/Info.plist;
+				INFOPLIST_FILE = RobotBattleSample2/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "許可してね";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -469,7 +469,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -493,14 +493,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotBattleSampl1.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RobotBattleSampl1";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotBattleSample2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RobotBattleSample2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -516,14 +516,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotBattleSampl1.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RobotBattleSampl1";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotBattleSample2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RobotBattleSample2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -538,14 +538,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = RobotBattleSampl1;
+				TEST_TARGET_NAME = RobotBattleSample2;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -560,14 +560,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSampl1UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.picon-inc.RobotBattleSample2UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = RobotBattleSampl1;
+				TEST_TARGET_NAME = RobotBattleSample2;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -575,7 +575,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		604D3E4F2E40AABF0066AED5 /* Build configuration list for PBXProject "RobotBattleSampl1" */ = {
+		604D3E4F2E40AABF0066AED5 /* Build configuration list for PBXProject "RobotBattleSample2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				604D3E742E40AAC20066AED5 /* Debug */,
@@ -584,7 +584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D3E762E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1" */ = {
+		604D3E762E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				604D3E772E40AAC20066AED5 /* Debug */,
@@ -593,7 +593,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D3E792E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1Tests" */ = {
+		604D3E792E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				604D3E7A2E40AAC20066AED5 /* Debug */,
@@ -602,7 +602,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D3E7C2E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSampl1UITests" */ = {
+		604D3E7C2E40AAC20066AED5 /* Build configuration list for PBXNativeTarget "RobotBattleSample2UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				604D3E7D2E40AAC20066AED5 /* Debug */,

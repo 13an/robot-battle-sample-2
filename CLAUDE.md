@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-RobotBattleSampl1 is a SwiftUI iOS application that implements a real-time multiplayer robot battle game using Bluetooth connectivity. Players control robots in a shared battlefield where they can attack each other and compete in battle scenarios.
+RobotBattleSample2 is a SwiftUI iOS application that implements a real-time multiplayer robot battle game using Bluetooth connectivity. Players control robots in a shared battlefield where they can attack each other and compete in battle scenarios.
 
 ## Architecture
 
@@ -34,12 +34,12 @@ RobotBattleSampl1 is a SwiftUI iOS application that implements a real-time multi
 ## Development Commands
 
 ### Build and Run
-- **Xcode**: Open `RobotBattleSampl1.xcodeproj` and use Cmd+R to build and run
+- **Xcode**: Open `RobotBattleSample2.xcodeproj` and use Cmd+R to build and run
 - **Scheme**: Use the main app scheme for device/simulator testing
 
 ### Testing
 - **Unit Tests**: Run via Xcode Test Navigator or Cmd+U
-- **UI Tests**: Automated UI testing available in `RobotBattleSampl1UITests`
+- **UI Tests**: Automated UI testing available in `RobotBattleSample2UITests`
 
 ### Debugging
 - Use Xcode's debugger and console for runtime debugging
