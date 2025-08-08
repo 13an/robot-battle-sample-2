@@ -152,8 +152,8 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         hpLabel.fontColor = .yellow
         hpLabel.text = "自分: \(hp)"
         hpLabel.horizontalAlignmentMode = .left
-        // 左上にHPを表示
-        hpLabel.position = CGPoint(x: 20, y: frame.height - 40)
+        // 左下に自分のHPを表示
+        hpLabel.position = CGPoint(x: 20, y: 40)
         addChild(hpLabel)
     }
     
@@ -163,8 +163,8 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
         remoteHPLabel.fontColor = .red
         remoteHPLabel.text = "相手: \(remoteHP)"
         remoteHPLabel.horizontalAlignmentMode = .left
-        // 左上の下に相手HPを表示
-        remoteHPLabel.position = CGPoint(x: 20, y: frame.height - 70)
+        // 左上に相手のHPを表示
+        remoteHPLabel.position = CGPoint(x: 20, y: frame.height - 40)
         addChild(remoteHPLabel)
     }
 
@@ -339,17 +339,6 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             label.position = CGPoint(x: frame.midX, y: frame.midY + 40)
         }
         overlay.addChild(label)
-
-        let button = SKLabelNode(text: "再戦する")
-        button.name = "rematch"
-        button.fontSize = 24
-        button.fontColor = .white
-        if let camera = camera {
-            button.position = CGPoint(x: camera.position.x, y: camera.position.y - 20)
-        } else {
-            button.position = CGPoint(x: frame.midX, y: frame.midY - 20)
-        }
-        overlay.addChild(button)
 
         addChild(overlay)
         gameOverOverlay = overlay
