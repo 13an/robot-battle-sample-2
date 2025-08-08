@@ -11,6 +11,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     var remoteRobot: SKNode!
     var joystick: VirtualJoystick!
     var hpLabel: SKLabelNode!
+    var remoteHPLabel: SKLabelNode!
     var hp: Int = 100
     var remoteHP: Int = 100
     var gameOverOverlay: SKNode?
@@ -33,6 +34,37 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     let damageCooldown: TimeInterval = 0.5
     
     var isTouchingWall = false
+
+    // MARK: - 座標変換ヘルパー関数
+    /// peripheral側では座標を上下反転する
+    func transformPosition(_ position: CGPoint) -> CGPoint {
+        if isCentral {
+            return position
+        } else {
+            // peripheral側：Y座標を反転
+            return CGPoint(x: position.x, y: size.height - position.y)
+        }
+    }
+    
+    /// peripheral側では角度を反転する
+    func transformAngle(_ angle: CGFloat) -> CGFloat {
+        if isCentral {
+            return angle
+        } else {
+            // peripheral側：角度を反転（上下反転に合わせる）
+            return -angle
+        }
+    }
+    
+    /// peripheral側ではベクトルのY成分を反転する
+    func transformVector(_ vector: CGVector) -> CGVector {
+        if isCentral {
+            return vector
+        } else {
+            // peripheral側：Y成分を反転
+            return CGVector(dx: vector.dx, dy: -vector.dy)
+        }
+    }
 
     func checkWallCollision(for robot: SKNode, isLocal: Bool) {
         // ローカル操作しているロボットでなければ振動させない
@@ -70,22 +102,17 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     }
 
     override func didMove(to view: SKView) {
-        size = CGSize(width: view.frame.width * 2, height: view.frame.height)
+        // 各画面全体をバトルフィールドとする
+        size = CGSize(width: view.frame.width, height: view.frame.height)
         backgroundColor = .black
 
-        let cameraNode = SKCameraNode()
-        camera = cameraNode
-        addChild(cameraNode)
-
-        cameraNode.position = isCentral
-            ? CGPoint(x: size.width * 0.25, y: size.height * 0.5)
-            : CGPoint(x: size.width * 0.75, y: size.height * 0.5)
-
-        cameraNode.setScale(1.0)
+        // カメラは不要（画面全体を使う）
+        camera = nil
 
         setupRobots()
         setupJoystick()
         setupHPLabel()
+        setupRemoteHPLabel()
 
         BluetoothManager.shared.delegate = self
         physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: .zero, size: size))
@@ -98,29 +125,23 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     }
 
     func setupRobots() {
-        let fullWidth = size.width
-
+        // 両端末で自分が下部、相手が上部に表示される配置
         localRobot = RobotFactory.createRobot(color: isCentral ? .yellow : .green)
-        localRobot.position = isCentral
-            ? CGPoint(x: fullWidth * 0.25, y: size.height * 0.5)
-            : CGPoint(x: fullWidth * 0.75, y: size.height * 0.5)
+        localRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.2) // 自分は常に下部
         localRobot.name = "localRobot"
         addChild(localRobot)
 
         remoteRobot = RobotFactory.createRobot(color: isCentral ? .green : .yellow)
-        remoteRobot.position = isCentral
-            ? CGPoint(x: fullWidth * 0.75, y: size.height * 0.5)
-            : CGPoint(x: fullWidth * 0.25, y: size.height * 0.5)
+        remoteRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.8) // 相手は常に上部
         remoteRobot.name = "remoteRobot"
         addChild(remoteRobot)
     }
-    
-    
 
     func setupJoystick() {
         joystick = VirtualJoystick()
         joystick.delegate = self
-        let position: CGPoint = isCentral ? CGPoint(x: 100, y: 100) : CGPoint(x: frame.width - 100, y: frame.height - 100)
+        // 右下にジョイスティックを配置（手で持つことを考慮）
+        let position = CGPoint(x: frame.width - 120, y: 120)
         joystick.position = position
         addChild(joystick)
     }
@@ -128,12 +149,23 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     func setupHPLabel() {
         hpLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
         hpLabel.fontSize = 20
-        hpLabel.fontColor = .white
-        hpLabel.text = "残り: \(hp)"
+        hpLabel.fontColor = .yellow
+        hpLabel.text = "自分: \(hp)"
         hpLabel.horizontalAlignmentMode = .left
-        hpLabel.position = isCentral ? CGPoint(x: 20, y: frame.height - 40)
-                                     : CGPoint(x: frame.width - 120, y: 40)
+        // 左上にHPを表示
+        hpLabel.position = CGPoint(x: 20, y: frame.height - 40)
         addChild(hpLabel)
+    }
+    
+    func setupRemoteHPLabel() {
+        remoteHPLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        remoteHPLabel.fontSize = 20
+        remoteHPLabel.fontColor = .red
+        remoteHPLabel.text = "相手: \(remoteHP)"
+        remoteHPLabel.horizontalAlignmentMode = .left
+        // 左上の下に相手HPを表示
+        remoteHPLabel.position = CGPoint(x: 20, y: frame.height - 70)
+        addChild(remoteHPLabel)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -148,6 +180,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     }
     
     func joystickDidMove(direction: CGVector) {
+        // ローカルの移動には生の値を使用（変換は送信時のみ）
         velocity = direction
 
         // 入力がゼロのときは角度を変えない
@@ -171,18 +204,28 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     }
 
     func sendLocalState() {
-        let state = RobotState(position: localRobot.position,
-                               velocity: velocity,
-                               angle: angle,
+        // peripheral側では座標を変換してから送信
+        let transformedPosition = transformPosition(localRobot.position)
+        let transformedVelocity = transformVector(velocity)
+        let transformedAngle = transformAngle(angle)
+        
+        let state = RobotState(position: transformedPosition,
+                               velocity: transformedVelocity,
+                               angle: transformedAngle,
                                hp: hp)
         BluetoothManager.shared.send(.robotState(state))
     }
 
     func receiveRemoteState(_ state: RobotState) {
-        let moveAction = SKAction.move(to: state.position, duration: sendInterval)
+        // peripheral側では受信した座標を変換
+        let transformedPosition = transformPosition(state.position)
+        let transformedAngle = transformAngle(state.angle)
+        
+        let moveAction = SKAction.move(to: transformedPosition, duration: sendInterval)
         remoteRobot.run(moveAction)
-        remoteRobot.zRotation = state.angle
+        remoteRobot.zRotation = transformedAngle
         remoteHP = state.hp
+        remoteHPLabel.text = "相手: \(remoteHP)"
         checkCollision()
     }
 
@@ -230,7 +273,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             print("💥 remote hits local")
             if isCentral {
                 hp -= 10
-                hpLabel.text = "残り: \(hp)"
+                hpLabel.text = "自分: \(hp)"
                 if hp <= 0 {
                     BluetoothManager.shared.send(.gameOver)
                     showGameOver(won: false)
@@ -244,7 +287,7 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
             if isCentral {
                 BluetoothManager.shared.send(.hit(damage: 10))
                 hp -= 10
-                hpLabel.text = "残り: \(hp)"
+                hpLabel.text = "自分: \(hp)"
                 if hp <= 0 {
                     BluetoothManager.shared.send(.gameOver)
                     showGameOver(won: false)
@@ -341,13 +384,12 @@ class BattleScene: SKScene, VirtualJoystickDelegate {
     func resetGame() {
         hp = 100
         remoteHP = 100
-        hpLabel.text = "残り: \(hp)"
+        hpLabel.text = "自分: \(hp)"
+        remoteHPLabel.text = "相手: \(remoteHP)"
         
-        // 位置リセット
-        localRobot.position = isCentral ? CGPoint(x: size.width * 0.25, y: size.height * 0.5)
-                                        : CGPoint(x: size.width * 0.75, y: size.height * 0.5)
-        remoteRobot.position = isCentral ? CGPoint(x: size.width * 0.75, y: size.height * 0.5)
-                                         : CGPoint(x: size.width * 0.25, y: size.height * 0.5)
+        // 位置リセット：自分は常に下部、相手は常に上部
+        localRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.2)
+        remoteRobot.position = CGPoint(x: size.width * 0.5, y: size.height * 0.8)
         
         // 角度や速度も初期化
         angle = 0
@@ -379,7 +421,7 @@ extension BattleScene: BluetoothManagerDelegate {
             break
         case .hit(let damage):
             hp -= damage
-            hpLabel.text = "残り: \(hp)"
+            hpLabel.text = "自分: \(hp)"
             if hp <= 0 {
                 BluetoothManager.shared.send(.gameOver)
                 showGameOver(won: false)
